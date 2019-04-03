@@ -29,9 +29,19 @@ var people []Person
 func LoadPeopleCsv() []Person {
   var people []Person
 
-  pwd, _ := os.Getwd()
-  csvFile, _ := os.Open(pwd + "/data.csv")
-  println(pwd + "/data.csv")
+  pwd, err := os.Getwd()
+  if err != nil {
+    log.Fatal(err)
+  }
+  //Open CSV File
+  csvFile, err := os.Open(pwd + "/data.csv")
+    if err != nil {
+      log.Fatal(err)
+    }
+
+  //This will give you the working Directory in commmand line
+  //println(pwd + "/data.csv")
+
   reader := csv.NewReader(bufio.NewReader(csvFile))
   for {
 		line, error := reader.Read()
@@ -56,13 +66,13 @@ func LoadPeopleCsv() []Person {
 
 
 // Show all people
-func GetPeople(w http.ResponseWriter, r *http.Request) {
+func GetPeopleEndpoint(w http.ResponseWriter, r *http.Request) {
     people := LoadPeopleCsv()
     json.NewEncoder(w).Encode(people)
 }
 
 // Show one person
-func GetPerson(w http.ResponseWriter, r *http.Request) {
+func GetPersonEndpoint(w http.ResponseWriter, r *http.Request) {
   people := LoadPeopleCsv()
   params := mux.Vars(r)
       for _, item := range people {
@@ -75,7 +85,7 @@ func GetPerson(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create a person
-func CreatePerson(w http.ResponseWriter, r *http.Request) {
+func CreatePersonEndpoint(w http.ResponseWriter, r *http.Request) {
   people := LoadPeopleCsv()
   params := mux.Vars(r)
     var person Person
@@ -86,7 +96,7 @@ func CreatePerson(w http.ResponseWriter, r *http.Request) {
 }
 
 // Delete a person
-func DeletePerson(w http.ResponseWriter, r *http.Request) {
+func DeletePersonEndpoint(w http.ResponseWriter, r *http.Request) {
   people := LoadPeopleCsv()
   params := mux.Vars(r)
       for index, item := range people {
@@ -107,10 +117,10 @@ func main() {
 
 
     router := mux.NewRouter()
-    router.HandleFunc("/people", GetPeople).Methods("GET")
-    router.HandleFunc("/people/{id}", GetPerson).Methods("GET")
-    router.HandleFunc("/people/{id}", CreatePerson).Methods("POST")
-    router.HandleFunc("/people/{id}", DeletePerson).Methods("DELETE")
+    router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
+    router.HandleFunc("/people/{id}", GetPersonEndpoint).Methods("GET")
+    router.HandleFunc("/people/{id}", CreatePersonEndpoint).Methods("POST")
+    router.HandleFunc("/people/{id}", DeletePersonEndpoint).Methods("DELETE")
 
     log.Fatal(http.ListenAndServe(":8000", router))
 
