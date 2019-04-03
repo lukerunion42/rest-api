@@ -34,7 +34,7 @@ func LoadPeopleCsv() []Person {
     log.Fatal(err)
   }
   //Open CSV File
-  csvFile, err := os.Open(pwd + "/data.csv")
+  csvFile, err := os.Open(pwd + "/testdata.csv")
     if err != nil {
       log.Fatal(err)
     }
