@@ -1,4 +1,5 @@
-# rest-api
+# Golang rest-api
+# Will write to CSV File
 
 The following project is intended to give you an opportunity to demonstrate your understanding of web service and micro service concepts.  The requirements are laid out in a simple user story that intentionally leaves room for interpretation. Please use your best judgment as you decide how to best fulfill the requirements outlined. 
 
