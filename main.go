@@ -61,19 +61,19 @@ func LoadPeopleCsv() []Person {
 }
 
 //This function will write the data to a CSV File
-func WriteToCsvFile() {
+func WriteToCsvFile(people []Person) {
 	//open file
 	pwd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 	//Open CSV File
-	csvFile, err := os.Open(pwd + "/testdata.csv")
+	csvFile, err := os.Create(pwd + "/testdata2.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	writer := csv.NewWriter(csvFile)
+	writer := csv.NewWriter(bufio.NewWriter(csvFile))
 	defer writer.Flush()
 
 	for _, value := range people {
@@ -120,6 +120,7 @@ func CreatePersonEndpoint(w http.ResponseWriter, r *http.Request) {
 	person.ID = params["id"]
 	people = append(people, person)
 	json.NewEncoder(w).Encode(people)
+	WriteToCsvFile(people)
 }
 
 // Delete a person
@@ -133,6 +134,7 @@ func DeletePersonEndpoint(w http.ResponseWriter, r *http.Request) {
 		}
 		json.NewEncoder(w).Encode(people)
 	}
+	WriteToCsvFile(people)
 }
 
 // Update a Person
@@ -164,6 +166,7 @@ func UpdatePersonEndpoint(w http.ResponseWriter, r *http.Request) {
 		}
 		json.NewEncoder(w).Encode(people)
 	}
+	WriteToCsvFile(people)
 }
 
 // main function
