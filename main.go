@@ -145,8 +145,20 @@ func UpdatePersonEndpoint(w http.ResponseWriter, r *http.Request) {
 			_ = json.NewDecoder(r.Body).Decode(&person)
 			if person.ID == item.ID {
 				people = append(people[:index], people[index+1:]...)
-				people = append(people[:index], person)
 
+				//This appends item to the end
+				people = append(people, person)
+			}
+
+			//This will sort the slice
+			for i := range people {
+				for j := range people {
+					if people[i].ID < people[j].ID {
+						var sub = people[i]
+						people[i] = people[j]
+						people[j] = sub
+					}
+				}
 			}
 
 		}
