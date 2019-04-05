@@ -173,7 +173,7 @@ func main() {
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", GetPersonEndpoint).Methods("GET")
 	router.HandleFunc("/people/{id}", CreatePersonEndpoint).Methods("POST")
-	router.HandleFunc("/people/{id}", UpdatePersonEndpoint).Methods("PUSH")
+	router.HandleFunc("/people/{id}", UpdatePersonEndpoint).Methods("PUT")
 	router.HandleFunc("/people/{id}", DeletePersonEndpoint).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
