@@ -30,7 +30,7 @@ func TestGetPersonEndpoint(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetPeopleEndpoint)
+	handler := http.HandlerFunc(GetPersonEndpoint)
 
 	handler.ServeHTTP(rr, req)
 
@@ -47,7 +47,7 @@ func TestCreatePersonEndpoint(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetPeopleEndpoint)
+	handler := http.HandlerFunc(GetPersonEndpoint)
 
 	handler.ServeHTTP(rr, req)
 
@@ -64,7 +64,7 @@ func TestUpdatePersonEndpoint(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetPeopleEndpoint)
+	handler := http.HandlerFunc(UpdatePersonEndpoint)
 
 	handler.ServeHTTP(rr, req)
 
@@ -75,13 +75,13 @@ func TestUpdatePersonEndpoint(t *testing.T) {
 }
 
 func TestDeletePersonEndpoint(t *testing.T) {
-	req, err := http.NewRequest("Delete", "/people/{id}", nil)
+	req, err := http.NewRequest("DELETE", "/people/{id}", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetPeopleEndpoint)
+	handler := http.HandlerFunc(DeletePersonEndpoint)
 
 	handler.ServeHTTP(rr, req)
 
